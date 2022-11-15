@@ -924,16 +924,22 @@ label, label + * {
   max-width: 200px;
 }
 .header .search-box {
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
   display: inline-block;
   position: relative;
   text-align: center;
   vertical-align: middle;
   width: calc(100% - 500px );
 }
-.header .search-box form {
-  width: 100%;
-  display: inline-block;
-}
+  .header .search-box form {
+    align-items: center;
+    background-color: transparent;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+  }
 .header .search-box form:after {
   content: "";
   display: block;
@@ -947,7 +953,7 @@ label, label + * {
   font-family: 'Poppins', sans-serif;
 }
 .header .search-box input.search-box-text:focus{
-    outline: 1px solid #000 !important;
+    outline: none;
 }
 .header .search-box input.search-box-text::placeholder{
     color: #888;
@@ -1538,7 +1544,7 @@ label, label + * {
 .product-selectors {
   margin: 0 0 50px;
   padding: 30px;
-  background-color: #102C5A;
+  background-color: #f288b0;
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
   width: 80%;
   display: inline-block;
@@ -6441,7 +6447,7 @@ a.ui-button:active, .ui-button:active,
   }
   .header .search-box input.search-box-text {
     border-radius: 10px;
-    border: 1px solid #E0D2D2;
+    border: none;
   }
   .header .search-box input.search-box-text:focus {
     outline: none;
@@ -7833,3 +7839,30 @@ a.ui-button:active, .ui-button:active,
   display: flex;
   flex-wrap: wrap;
 }
+
+
+
+/*** mudahale ***/
+a.tab-categories-sp {
+  border-left: 1px solid #ddd;
+  font-size: 13px;
+  height: 54px;
+  line-height: 54px;
+  letter-spacing: 1.6px;
+  min-width: 113px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.tab-categories {
+  display: flex;
+}
+
+@media only screen and (max-width: 600px) {
+  .tab-categories {
+    display: none;
+  }
+
+}
+
+

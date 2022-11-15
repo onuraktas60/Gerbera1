@@ -85,7 +85,7 @@
 
 
 .topbar {
-  background-color: #102C5A;
+  background-color: #f288b0;
 }
 .topmenu-right {
   text-align: right;
@@ -143,8 +143,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: #102C5A;
-  color: #fff;
+  background: #fff;
+  color: #000;
   font-size: 25px;
   border-radius: 10px;
   cursor: pointer;
@@ -269,7 +269,7 @@ ul.login-list li :hover{
 .header-links ul li a span.px-unread-qty {
   width: 22px;
   height: 22px;
-  background: #162C5B;
+  background: #f288b0;
   position: absolute;
   border-radius: 50%;
   color: #fff;
@@ -277,7 +277,7 @@ ul.login-list li :hover{
   line-height: 22px;
   left: 16px;
   top: -10px;
-  font-size:10px;
+  font-size: 10px;
   font-family: 'Poppins', sans-serif;
 }
 .theme-custom {
@@ -359,6 +359,10 @@ ul.login-list li :hover{
 .section-bg {
   background-color: #F5F5F5;
 }
+.category-page.section-width {
+  padding: 0px !important;
+}
+
 .section-width{
   width: 100%;
   display: inline-block;
@@ -803,7 +807,7 @@ ul.login-list li :hover{
   display: inline-block;
   margin: 0 0 50px;
   padding: 30px;
-  background-color: #CAD2DF;
+  background-color: #F28890;
   border-radius: 10px 0px 0px 10px;
   box-shadow: 0px 10px 20px rgba(0,0,0,0.3);
   text-align: center;
