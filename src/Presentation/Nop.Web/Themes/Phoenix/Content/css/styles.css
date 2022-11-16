@@ -919,7 +919,7 @@ label, label + * {
   line-height: 0; /*firefox line-height bug fix*/
 }
 .header-logo a img {
-  max-height: 80px;
+  max-height: 100px;
   object-fit: cover;
   max-width: 200px;
 }
