@@ -897,14 +897,13 @@ label, label + * {
 }
 .header-lower {
   position: relative;
-  padding: 10px 0;
   display: flex;
   align-items: center;
+  height: 60px;
   justify-content: space-between;
-  flex-wrap: wrap;
-  border-bottom: 1px solid #E0D2D2;
-  padding-top: 5px !important;
-  padding-bottom: 5px !important;
+  border-bottom: 1px solid #e0d2d2;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
 }
 .header-logo {
   text-align: center;
@@ -1016,7 +1015,7 @@ label, label + * {
 
 
 .footer {
-  background-color: #102C5A;
+  background-color: #000;
   text-align: center;
   position: relative;
   z-index: 9;
@@ -1679,7 +1678,7 @@ label, label + * {
   transition: all 0.3s;
   background: #fff;
   border: 1px solid #E0D2D2;
-  border-radius: 5px;
+  border-radius: 0px;
   overflow: hidden;
 }
 .item-box .picture {
@@ -2191,7 +2190,7 @@ button.email-a-friend-button:hover{
   padding: 0;
   line-height: 48px;
   text-align: center;
-  background-color: #102C5A;
+  background-color: #f288b0;
   color: #fff;
   border-radius: 5px;
   margin: 0 15px 0 0;
@@ -2372,7 +2371,7 @@ button.email-a-friend-button:hover{
 }
 .overview .add-to-cart-button {
   height: 40px;
-  background-color: #102C5A;
+  background-color: #f288b0;
   padding: 0 24px;
   font-size: 15px;
   color: #fff;
