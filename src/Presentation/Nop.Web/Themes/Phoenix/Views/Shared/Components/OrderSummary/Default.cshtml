@@ -433,12 +433,23 @@
             count = count < 1 ? 1 : count;
             $input.val(count);
             $input.change();
+            document.getElementById("updatecart").click();
             return false;
+
         });
         $('.pi-plus-1').click(function () {
             var $input = $(this).parent().find('input');
             $input.val(parseInt($input.val()) + 1);
             $input.change();
+            $.ajax({
+      type: "POST",
+      url: "https://localhost:63200/cart",
+      data: multipart/form-data,
+      dataType: "json",
+      encode: true,
+    }).done(function (data) {
+      console.log(data);
+    });
             return false;
         });
     });
