@@ -1,0 +1,84 @@
+@*
+    // ***	 ** ****** ****** ****** ******* **     ** ****** ***   ** **** ****
+    // ****  ** **  ** **  ** **  **  **  **  **   **  **  ** ****  ** *    *
+    // ** ** ** **  ** ****** ******  **  **   ** **   ****** ** ** ** *    ***
+    // **  **** **  ** **	  **  **  **  **    ***    **  ** **  **** *    *
+    // **   *** ****** **	  **  ** *******     *     **  ** **   *** **** ****
+    //
+    // **************************************************************************
+    // *                                                                		*
+	// *            Product quick view Plugin by NopAdvance team                *
+    // *			Copyright (c) NopAdvance LLP. All Rights Reserved			*
+    // *                                                                       	*
+    // **************************************************************************
+    // *                                                                       	*
+    // * Email:		contact@nopadvance.com										*
+    // * Website:	https://nopadvance.com										*
+    // *                                                                       	*
+    // **************************************************************************
+    // *                                                                       	*
+    // * Please see the  License file for the full End User License Agreement. 	*
+    // * The  complete license agreement is also available on  our  website at 	*
+    // * https://nopadvance.com/license-terms									*
+    // *                                                                       	*
+    // * This  software / plugin  is furnished  under a license  and  may   be  *
+    // * used  and modified  only in accordance with the terms of such license  *
+    // * and with the inclusion of the above copyright notice.  This  software	*
+    // * or any other copies thereof may not be  provided  or  otherwise  made	*
+    // * available  to any other person.  No title to  and  ownership  of  the  *
+    // * software is hereby transferred.                                        *
+    // *                                                                       	*
+    // * You may not reverse  engineer, decompile, defeat  license  encryption 	*
+    // * mechanisms  or  disassemble this software product or software product 	*
+    // * license.  NopAdvance may terminate this  license if you don't  comply 	*
+    // * with any of the terms & conditions set forth in our  end user license	*
+    // * agreement (EULA).  In such event , licensee agrees to return licensor	*
+    // * or destroy  all copies of software  upon termination  of the license.	*
+    // *                                                                       	*
+    // **************************************************************************
+*@
+@model ConfigurationModel
+@inject IPluginService pluginService
+@inject IGenericHelper genericHelper
+@{
+    
+    Layout = genericHelper.GetPluginConfigureLayout();
+    ViewBag.SystemName = PluginDefaults.SYSTEM_NAME;
+    ViewBag.PluginStatus = Model.PluginStatus;
+
+    //active menu item (system name)
+    NopHtml.SetActiveMenuItemSystemName(SiteMapDefaults.CONFIGURE_MENU_SYSTEM_NAME);
+
+    const string hideGeneralSettingAttributeName = "productQuickviewpage.HideGeneralSettingBlock";
+    var HideGeneralSettingBlock = await genericAttributeService.GetAttributeAsync<bool>(await workContext.GetCurrentCustomerAsync(), hideGeneralSettingAttributeName);
+
+    const string hideAdvancedSettingAttributeName = "productQuickviewpage.HideAdvancedSettingBlock";
+    var HideAdvancedSettingBlock = await genericAttributeService.GetAttributeAsync<bool>(await workContext.GetCurrentCustomerAsync(), hideAdvancedSettingAttributeName);
+  
+}
+@Html.Raw(Model.PluginDesc)
+<form asp-controller="NopAdvanceQuickView" asp-action="Configure" method="post">   
+    <div class="clearfix">
+        <div class="float-left">
+            @await Component.InvokeAsync("StoreScopeConfiguration")
+        </div>
+        <div class="float-right">
+            <button type="submit" name="save" class="btn btn-primary">
+                <i class="far fa-save"></i>
+                @T("Admin.Common.Save")
+            </button>
+        </div>
+    </div>
+ 
+    <section>
+        <div>
+            <div class="form-horizontal">
+                <nop-cards id="quickview-widget-cards">
+                    <nop-card asp-name="tab-generalsetting" asp-icon="fa fa-info" asp-title="@T("NopAdvance.Plugin.ProductQuickView.GeneralSetting")" asp-hide-block-attribute-name="@hideGeneralSettingAttributeName" asp-hide="@HideGeneralSettingBlock" asp-advanced="false">@await Html.PartialAsync("_generalSetting.cshtml", Model)</nop-card>
+                    <nop-card asp-name="tab-advancesetting" asp-icon="fa fa-wrench" asp-title="@T("NopAdvance.Plugin.ProductQuickView.AdvanceSetting")" asp-hide-block-attribute-name="@hideAdvancedSettingAttributeName" asp-hide="@HideAdvancedSettingBlock" asp-advanced="false">@await Html.PartialAsync("_advanceSetting.cshtml", Model)</nop-card>
+                </nop-cards>
+            </div>
+        </div>
+    </section>
+</form>
+

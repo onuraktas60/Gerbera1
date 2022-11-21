@@ -1,0 +1,16 @@
+{
+    "Group": "NopAdvance",
+    "FriendlyName": "Product quick view",
+    "SystemName": "NopAdvance.Plugin.ProductQuickView",
+    "Version": "1.0",
+    "SupportedVersions": [ "4.50" ],
+    "Author": "NopAdvance team",
+    "DisplayOrder": 1,
+    "FileName": "NopAdvance.Plugin.Widgets.ProductQuickView.dll",
+    "Description": "This plugin allows you to display product information in pop-up.",
+    "DependsOnSystemNames": [ "NopAdvance.Core" ],
+    "CoreVersion": "1.11",
+    "ProductUrl": "https://store.nopadvance.com/product-quick-view-nopcommerce-plugin",
+    "HelpUrl": "https://docs.nopadvance.com/ProductQuickView-nopcommerce.html"
+  }
+

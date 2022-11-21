@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Language Name="English">
+  <!--Menu-->
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView">
+    <Value>Product quick view</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.Configure">
+    <Value>Configure</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.Help">
+    <Value>Help</Value>
+  </LocaleResource>
+  <!--Menu-->
+  <!--general settings-->
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.Enable">
+    <Value>Enabled</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.Enable.Hint">
+    <Value>Check/uncheck to enable/disable this plugin.</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.ProductItemSelector">
+    <Value>Product item selector</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.ProductItemSelector.Hint">
+    <Value>Set the selector of the product item element. The selector should contain attribute 'data-productid' with the id of the product.</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.EnableOverlay">
+    <Value>Enable overlay</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.EnableOverlay.Hint">
+    <Value>If checked an overlay effect will be applied to your website, so that only the product quick view popup will be clickable.</Value>
+  </LocaleResource>
+  <!--general settings-->
+  <!--advance settings-->
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.ShowRatingsAndReview">
+    <Value>Show ratings and review</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.ShowRatingsAndReview.Hint">
+    <Value>If checked the show ratings and review will be shown in the product quick view.</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.ShowShortProductDescription">
+    <Value>Show short product description</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.ShowShortProductDescription.Hint">
+    <Value>If checked the short product description will be shown in the product quick view.</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.ShowFullProductDescription">
+    <Value>Show full product description</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.ShowFullProductDescription.Hint">
+    <Value>If checked the full product description will be shown in the product quick view.</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.ShowManufacturer">
+    <Value>Show manufacturer</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.ShowManufacturer.Hint">
+    <Value>If checked the manufacturer will be shown in the product quick view.</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.ShowSKU">
+    <Value>Show product SKU</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.ShowSKU.Hint">
+    <Value>If checked the product SKU will be shown in the product quick view.</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.ShowProductSpecification">
+    <Value>Show product specification</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.ShowProductSpecification.Hint">
+    <Value>If checked the product specification will be shown in the product quick view.</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.ShowProductsAlsoPurchased">
+    <Value>Show products also purchased</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.ShowProductsAlsoPurchased.Hint">
+    <Value>If checked the products also purchased will be shown in the product quick view.</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.ShowCrossSalesProducts">
+    <Value>Show cross-sells products</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.ShowCrossSalesProducts.Hint">
+    <Value>If checked the cross-sells products will be shown in the product quick view.</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.ShowRelatedProducts">
+    <Value>Show related products</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.ShowRelatedProducts.Hint">
+    <Value>If checked the related products will be shown in the product quick view.</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.ShowAddToWishListButton">
+    <Value>Show add to wishlist button</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.ShowAddToWishListButton.Hint">
+    <Value>If checked the add to wishlist button will be shown in the product quick view.</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.ShowEmailAFriendButton">
+    <Value>Show 'email a friend' button</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.ShowEmailAFriendButton.Hint">
+    <Value>If checked the 'email a friend' button will be shown in the product quick view.</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.ShowCompareProductButton">
+    <Value>Show compare product button</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.ShowCompareProductButton.Hint">
+    <Value>If checked the compare product button will be shown in the product quick view.</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.ShowProductTags">
+    <Value>Show product tags</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.ShowProductTags.Hint">
+    <Value>If checked the product tags will be shown in the product quick view.</Value>
+  </LocaleResource>
+  <!--advance settings-->
+  <!--Panel labels-->
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.GeneralSetting">
+    <Value>General</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.AdvanceSetting">
+    <Value>Product quick view pop-up</Value>
+  </LocaleResource>
+   <!--Panel labels-->
+  <!--Tabs-->
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.Details">
+    <Value>Details</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.Description">
+    <Value>Description</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.Specifications">
+    <Value>Specifications</Value>
+  </LocaleResource>
+  <LocaleResource Name="NopAdvance.Plugin.ProductQuickView.Variants">
+    <Value>Variants</Value>
+  </LocaleResource>
+   <!--Tabs-->
+</Language>

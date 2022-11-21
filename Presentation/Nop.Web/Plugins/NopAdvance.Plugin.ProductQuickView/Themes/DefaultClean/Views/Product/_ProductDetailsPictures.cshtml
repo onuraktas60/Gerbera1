@@ -1,0 +1,75 @@
+@*
+    // ***	 ** ****** ****** ****** ******* **     ** ****** ***   ** **** ****
+    // ****  ** **  ** **  ** **  **  **  **  **   **  **  ** ****  ** *    *
+    // ** ** ** **  ** ****** ******  **  **   ** **   ****** ** ** ** *    ***
+    // **  **** **  ** **	  **  **  **  **    ***    **  ** **  **** *    *
+    // **   *** ****** **	  **  ** *******     *     **  ** **   *** **** ****
+    //
+    // **************************************************************************
+    // *                                                                		*
+	// *            Product quick view Plugin by NopAdvance team                *
+    // *			Copyright (c) NopAdvance LLP. All Rights Reserved			*
+    // *                                                                       	*
+    // **************************************************************************
+    // *                                                                       	*
+    // * Email:		contact@nopadvance.com										*
+    // * Website:	https://nopadvance.com										*
+    // *                                                                       	*
+    // **************************************************************************
+    // *                                                                       	*
+    // * Please see the  License file for the full End User License Agreement. 	*
+    // * The  complete license agreement is also available on  our  website at 	*
+    // * https://nopadvance.com/license-terms									*
+    // *                                                                       	*
+    // * This  software / plugin  is furnished  under a license  and  may   be  *
+    // * used  and modified  only in accordance with the terms of such license  *
+    // * and with the inclusion of the above copyright notice.  This  software	*
+    // * or any other copies thereof may not be  provided  or  otherwise  made	*
+    // * available  to any other person.  No title to  and  ownership  of  the  *
+    // * software is hereby transferred.                                        *
+    // *                                                                       	*
+    // * You may not reverse  engineer, decompile, defeat  license  encryption 	*
+    // * mechanisms  or  disassemble this software product or software product 	*
+    // * license.  NopAdvance may terminate this  license if you don't  comply 	*
+    // * with any of the terms & conditions set forth in our  end user license	*
+    // * agreement (EULA).  In such event , licensee agrees to return licensor	*
+    // * or destroy  all copies of software  upon termination  of the license.	*
+    // *                                                                       	*
+    // **************************************************************************
+*@
+@model Nop.Web.Models.Catalog.ProductDetailsModel
+
+<div class="gallery">
+	<div class="picture">
+		<a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" title="@Model.DefaultPictureModel.Title" id="main-product-img-lightbox-anchor-@Model.Id">
+			<img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" id="main-product-img-@Model.Id" />
+		</a>
+	</div>
+
+	@if (Model.PictureModels.Count > 1)
+	{
+		<div class="picture-thumbs">
+			@foreach (var picture in Model.PictureModels)
+			{
+				<div class="thumb-item">
+					<div>
+						<img src="@picture.ThumbImageUrl" alt="@picture.AlternateText" title="@picture.Title" data-defaultsize="@picture.ImageUrl" data-fullsize="@picture.FullSizeImageUrl" data-seName="@Model.SeName" />
+					</div>
+				</div>
+			}
+		</div>
+		<script asp-location="Footer">
+			$(document).ready(function() {
+				$('.thumb-item img').on('click',
+					function() {
+						$('#main-product-img-@Model.Id').attr('src', $(this).attr('data-defaultsize'));
+						$('#main-product-img-@Model.Id').attr('title', $(this).attr('title'));
+						$('#main-product-img-@Model.Id').attr('alt', $(this).attr('alt'));
+						$('#main-product-img-lightbox-anchor-@Model.Id')
+							.attr('href', $(this).attr('data-seName'));
+						$('#main-product-img-lightbox-anchor-@Model.Id').attr('title', $(this).attr('title'));
+					});
+			});
+		</script>
+	}
+</div>

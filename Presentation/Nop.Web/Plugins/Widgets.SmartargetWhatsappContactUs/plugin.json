@@ -1,0 +1,13 @@
+{
+  "Group": "Widgets",
+  "FriendlyName": "Smartarget Whatsapp - Contact Us",
+  "SystemName": "Widgets.SmartargetWhatsappContactUs",
+  "Version": "1.00",
+  "SupportedVersions": [ "4.50" ],
+  "Author": "Erez from Smartarget",
+  "DisplayOrder": 1,
+  "FileName": "Nop.Plugin.Widgets.SmartargetWhatsappContactUs.dll",
+  "Description": "Allow customers to contact you using WhatsApp",
+  "LimitedToStores": [],
+  "LimitedToCustomerRoles": []
+}

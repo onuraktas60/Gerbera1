@@ -1,0 +1,276 @@
+@*
+    // ***	 ** ****** ****** ****** ******* **     ** ****** ***   ** **** ****
+    // ****  ** **  ** **  ** **  **  **  **  **   **  **  ** ****  ** *    *
+    // ** ** ** **  ** ****** ******  **  **   ** **   ****** ** ** ** *    ***
+    // **  **** **  ** **	  **  **  **  **    ***    **  ** **  **** *    *
+    // **   *** ****** **	  **  ** *******     *     **  ** **   *** **** ****
+    //
+    // **************************************************************************
+    // *                                                                		*
+	// *            Product quick view Plugin by NopAdvance team                *
+    // *			Copyright (c) NopAdvance LLP. All Rights Reserved			*
+    // *                                                                       	*
+    // **************************************************************************
+    // *                                                                       	*
+    // * Email:		contact@nopadvance.com										*
+    // * Website:	https://nopadvance.com										*
+    // *                                                                       	*
+    // **************************************************************************
+    // *                                                                       	*
+    // * Please see the  License file for the full End User License Agreement. 	*
+    // * The  complete license agreement is also available on  our  website at 	*
+    // * https://nopadvance.com/license-terms									*
+    // *                                                                       	*
+    // * This  software / plugin  is furnished  under a license  and  may   be  *
+    // * used  and modified  only in accordance with the terms of such license  *
+    // * and with the inclusion of the above copyright notice.  This  software	*
+    // * or any other copies thereof may not be  provided  or  otherwise  made	*
+    // * available  to any other person.  No title to  and  ownership  of  the  *
+    // * software is hereby transferred.                                        *
+    // *                                                                       	*
+    // * You may not reverse  engineer, decompile, defeat  license  encryption 	*
+    // * mechanisms  or  disassemble this software product or software product 	*
+    // * license.  NopAdvance may terminate this  license if you don't  comply 	*
+    // * with any of the terms & conditions set forth in our  end user license	*
+    // * agreement (EULA).  In such event , licensee agrees to return licensor	*
+    // * or destroy  all copies of software  upon termination  of the license.	*
+    // *                                                                       	*
+    // **************************************************************************
+*@
+@inject NopAdvanceProductQuickViewSettings nopAdvanceProductQuickViewSettings
+@inject CatalogSettings catalogSettings
+@using Nop.Web.Extensions
+@{
+	var datePickerFormat = Html.GetJQueryDateFormat();
+}
+
+<link rel="stylesheet" href="~/Plugins/NopAdvance.Plugin.ProductQuickView/Themes/DefaultClean/Content/css/widget.css" />
+
+<link rel="stylesheet" href="~/lib_npm/magnific-popup/magnific-popup.css" />
+<link rel="stylesheet" href="~/lib_npm/fine-uploader/fine-uploader/fine-uploader.min.css" />
+
+<script src="~/lib_npm/magnific-popup/jquery.magnific-popup.min.js" asp-location="Footer"></script>
+<script src="~/lib_npm/fine-uploader/jquery.fine-uploader/jquery.fine-uploader.min.js" asp-location="Footer"></script>
+
+<button type='button' class='button-2 product-quick-view'>Quick View</button>
+
+
+<script asp-location="Footer">
+	$(document).ready(function() {
+		var detailUIPicker = "";
+
+		function setLoadWaiting(enable) {
+			var $busyEl = $('.ajax-loading-block-window-quickview');
+			if (enable) {
+				$busyEl.show();
+			} else {
+				$busyEl.hide();
+			}
+		}
+		function datePickerBind(pid)
+		{
+			var startDateControlId = "#rental_start_date_" + pid;
+			if ($(startDateControlId).length > 0) {
+				$(startDateControlId).datepicker({ dateFormat: "@datePickerFormat", onSelect: dateControlChangeHandlerFuncName(parseInt(pid)) });
+			}
+			var endDateControlId = "#rental_end_date_" + pid;
+			if ($(endDateControlId).length > 0) {
+				$(endDateControlId).datepicker({ dateFormat: "@datePickerFormat", onSelect: dateControlChangeHandlerFuncName(parseInt(pid)) });
+			}
+			if ($(startDateControlId).length > 0) {
+				setTimeout(function() {
+					$(startDateControlId).focus(function(e) {
+						$(e.target).closest(".rental-attributes").append($('.ui-datepicker'));
+						$(".ui-datepicker").removeClass("position-enddate");
+					});
+
+				}, 500);
+			}
+			if ($(endDateControlId).length > 0) {
+				setTimeout(function() {
+					$(endDateControlId).focus(function(e) {
+						$(e.target).closest(".rental-attributes").append($('.ui-datepicker'));
+
+						$(".ui-datepicker").addClass("position-enddate");
+					});
+
+				}, 500);
+			}
+		}
+
+		function dateControlChangeHandlerFuncName(id) {
+			var url = '@Url.Action("productdetails_attributechange", "shoppingcart")?productId=' + id + "&validateAttributeConditions=false&loadPicture=false";
+			@if (catalogSettings.AjaxProcessAttributeChange)
+			{
+				<text>
+							$.ajax({
+								cache: false,
+								url: url,
+								data: $('#product-details-form').serialize(),
+								type: "POST",
+								success: function(data, textStatus, jqXHR) {
+									if (data.sku) {
+										$('#sku-' + id).text(data.sku);
+									}
+									if (data.mpn) {
+										$('#mpn-' + id).text(data.mpn);
+									}
+									if (data.gtin) {
+										$('#gtin-' + id).text(data.gtin);
+									}
+									if (data.price) {
+										$('.price-value-' + id).text(data.price);
+									}
+								}
+							});
+				</text>
+			}
+				}
+
+
+		if ($(".ajax-loading-block-window-quickview").length == 0) {
+			$('body').prepend("<div class='ajax-loading-block-window-quickview' style='display: none'></div>");
+
+		}
+		if ($(".main-product-quickview").length == 0) {
+			var popup = '<div class="main-product-quickview">' +
+				'<a href="#productquickview-popup" id="open-productquickview-popup" class="" data-effect=""></a>' +
+				'<div id="productquickview-popup" class="productquickview-popup mfp-with-anim mfp-hide">' +
+				'<div class="popup-header"><span id="product-title"></span></div>' +
+				'<div id="productquickview-popup-content">' +
+				'</div>' +
+				'</div>' +
+				'</div>';
+
+			$('body').append(popup);
+		}
+
+
+
+		$("#open-productquickview-popup").magnificPopup({
+			type: 'inline',
+			closeOnBgClick: !JSON.parse('@Html.Raw(Json.Serialize(nopAdvanceProductQuickViewSettings.EnableOverlay))'),
+			callbacks: {
+				open: function() {
+					if ($(".mfp-wrap").length > 0) {
+						$(".mfp-wrap").addClass('mfp-productquickview-wrap');
+					}
+					if ($(".bar-notification-container").length > 0) {
+						$(".bar-notification-container").addClass('productquickview-notification-container');
+					}
+				},
+				close: function() {
+					if(detailUIPicker != '')
+					{
+						$('body').append(detailUIPicker);
+					}
+					
+					$('#productquickview-popup-content').html('');
+					if ($(".bar-notification-container").length > 0) {
+						$(".bar-notification-container").removeClass('productquickview-notification-container');
+					}
+					if ($(".mfp-wrap").length > 0) {
+						$(".mfp-wrap").removeClass('mfp-productquickview-wrap');
+					}
+				}
+			}
+		});
+
+		var SavedSelector = JSON.parse('@Html.Raw(Json.Serialize(nopAdvanceProductQuickViewSettings.ProductItemSelector))');
+		var selector = SavedSelector != '' ? SavedSelector + "[data-productid]" : "";
+		if ($(selector).length > 0) {
+			$(".product-quick-view").click(function(e) {
+				var id = $(e.target).closest(selector).attr('data-productid');
+				if (id) {
+					setLoadWaiting(1);
+					$.ajax({
+						cache: false,
+						url: 'QuickViewPublic/ProductDetails',
+						contentType: 'application/html; charset=utf-8',
+						type: 'GET',
+						dataType: 'html',
+						data: { productId: parseInt(id) },
+					}).success(function(data) {
+						if (data) {
+							detailUIPicker = '';
+							$('#productquickview-popup-content').html('');
+							if($("#ui-datepicker-div").length > 0)
+							{
+								detailUIPicker = $("#ui-datepicker-div")[0];
+							}
+							var startDateControlId = "#rental_start_date_" + id;
+							if ($(startDateControlId).length > 0) {
+								$(startDateControlId).datepicker({ dateFormat: "@datePickerFormat", onSelect: dateControlChangeHandlerFuncName(parseInt(id)) });
+							}
+							var endDateControlId = "#rental_end_date_" + id;
+							if ($(endDateControlId).length > 0) {
+								$(endDateControlId).datepicker({ dateFormat: "@datePickerFormat", onSelect: dateControlChangeHandlerFuncName(parseInt(id)) });
+							}
+							
+							$('#productquickview-popup-content').html(data);
+							if($(".description-section").children().length == 0)
+							{
+								$("#description-tab").hide();
+							} 
+							if($("#product-simple-specification").children().length == 0 && $(".product-variant-list").length == 0)
+							{
+								$("#specifications-tab").hide();
+							}
+							if($("#product-specification").children().length == 0 && $(".product-variant-list").length > 0)
+							{
+								$("#specifications-tab").hide();
+							}
+							else if(($("#product-specification").children().length > 0 && $(".product-variant-list").length > 0) && ($(".description-section").children().length == 0))
+							{
+								$("#specifications-tab").find(".plus-icon").removeClass('active');
+								$(".specifications-section").show();
+							}
+							$('#open-productquickview-popup').magnificPopup('open');
+							if ($(startDateControlId).length > 0) {
+								setTimeout(function() {
+									$("#productquickview-popup").find('.rental-attributes').append($('.ui-datepicker'));
+									$(startDateControlId).focus(function() {
+										$(".ui-datepicker").removeClass("position-enddate");
+									});
+
+								}, 500);
+							}
+							if ($(endDateControlId).length > 0) {
+								setTimeout(function() {
+									$(endDateControlId).focus(function() {
+										$(".ui-datepicker").addClass("position-enddate");
+									});
+
+								}, 500);
+							}
+							setTimeout(function() {
+								if($('[id^=rental_start_date_]').length > 0 && $(".product-variant-list").length > 0)
+								{
+									$.each($(".product-variant-line"), function(i,item){
+										datePickerBind(item.dataset.productid);
+									});
+								}
+
+								}, 500);
+							
+
+							setLoadWaiting(0);
+							$("#productquickview-popup-content").find('input').attr("autocomplete","off");
+							$("#product-title").html($("#md-tile").html());
+						}
+						else {
+							setLoadWaiting(0);
+						}
+					}).error(function() {
+						setLoadWaiting(0);
+					});
+				}
+				e.stopImmediatePropagation();
+
+			});
+		}
+
+		
+	})
+
+</script>

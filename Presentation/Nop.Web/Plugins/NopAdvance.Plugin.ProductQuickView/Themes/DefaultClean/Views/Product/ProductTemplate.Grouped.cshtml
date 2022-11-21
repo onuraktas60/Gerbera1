@@ -1,0 +1,252 @@
+@*
+    // ***	 ** ****** ****** ****** ******* **     ** ****** ***   ** **** ****
+    // ****  ** **  ** **  ** **  **  **  **  **   **  **  ** ****  ** *    *
+    // ** ** ** **  ** ****** ******  **  **   ** **   ****** ** ** ** *    ***
+    // **  **** **  ** **	  **  **  **  **    ***    **  ** **  **** *    *
+    // **   *** ****** **	  **  ** *******     *     **  ** **   *** **** ****
+    //
+    // **************************************************************************
+    // *                                                                		*
+	// *            Product quick view Plugin by NopAdvance team                *
+    // *			Copyright (c) NopAdvance LLP. All Rights Reserved			*
+    // *                                                                       	*
+    // **************************************************************************
+    // *                                                                       	*
+    // * Email:		contact@nopadvance.com										*
+    // * Website:	https://nopadvance.com										*
+    // *                                                                       	*
+    // **************************************************************************
+    // *                                                                       	*
+    // * Please see the  License file for the full End User License Agreement. 	*
+    // * The  complete license agreement is also available on  our  website at 	*
+    // * https://nopadvance.com/license-terms									*
+    // *                                                                       	*
+    // * This  software / plugin  is furnished  under a license  and  may   be  *
+    // * used  and modified  only in accordance with the terms of such license  *
+    // * and with the inclusion of the above copyright notice.  This  software	*
+    // * or any other copies thereof may not be  provided  or  otherwise  made	*
+    // * available  to any other person.  No title to  and  ownership  of  the  *
+    // * software is hereby transferred.                                        *
+    // *                                                                       	*
+    // * You may not reverse  engineer, decompile, defeat  license  encryption 	*
+    // * mechanisms  or  disassemble this software product or software product 	*
+    // * license.  NopAdvance may terminate this  license if you don't  comply 	*
+    // * with any of the terms & conditions set forth in our  end user license	*
+    // * agreement (EULA).  In such event , licensee agrees to return licensor	*
+    // * or destroy  all copies of software  upon termination  of the license.	*
+    // *                                                                       	*
+    // **************************************************************************
+*@
+@model ProductDetailsModel
+@inject ISettingService settingService
+@inject IStoreContext storeContext
+@inject IQuickViewWidgetModelFactory iQuickViewWidgetModelFactory
+@{
+	Layout = null;
+
+	//page class
+	NopHtml.AppendPageCssClassParts("html-product-details-page");
+
+	//load settings
+	var nopAdvanceProductQuickViewSettings = await settingService.LoadSettingAsync<NopAdvanceProductQuickViewSettings>((await storeContext.GetCurrentStoreAsync()).Id);
+	nopAdvanceProductQuickViewSettings.ShowCompareProductButton = Model.CompareProductsEnabled && nopAdvanceProductQuickViewSettings.ShowCompareProductButton;
+}
+
+<div class="page product-details-page">
+	<div class="page-body">
+		<form asp-route="Product" asp-route-sename="@Model.SeName" method="post" id="product-details-form">
+			<div data-productid="@Model.Id">
+				<span id="md-tile" style="display: none;">@Model.Name</span>
+				<div class="product-essential">
+					<!--product pictures-->
+					@await Html.PartialAsync("_ProductDetailsPictures.cshtml", Model)
+					<div class="overview">
+						@await Html.PartialAsync("~/Views/Product/_Discontinued.cshtml", Model)
+
+						@*Description section*@
+						<div class="tab-quikview" id="description-tab">
+							<p>
+								@T("NopAdvance.Plugin.ProductQuickView.Description")
+							</p>
+							<i class="plus-icon"></i>
+						</div>
+						<div class="description-section">
+							@if (nopAdvanceProductQuickViewSettings.ShowShortProductDescription)
+							{
+								@if (!string.IsNullOrEmpty(Model.ShortDescription))
+								{
+									<div class="short-description">
+										@Html.Raw(Model.ShortDescription)
+									</div>
+								}
+							}
+							@if (nopAdvanceProductQuickViewSettings.ShowFullProductDescription)
+							{
+								@if (!string.IsNullOrEmpty(Model.FullDescription))
+								{
+									<div class="full-description">
+										@Html.Raw(Model.FullDescription)
+									</div>
+								}
+							}
+						</div>
+
+						@*Specifications section*@
+						<div class="tab-quikview" id="specifications-tab">
+							<p>
+								@T("NopAdvance.Plugin.ProductQuickView.Specifications")
+							</p>
+							<i class="plus-icon active"></i>
+						</div>
+						<div class="specifications-section" style="display:none">
+							<div id="product-specification" class="product-collateral">
+								@if (nopAdvanceProductQuickViewSettings.ShowProductSpecification)
+								{
+									@await Html.PartialAsync("~/Views/Product/_ProductSpecifications.cshtml", Model.ProductSpecificationModel)
+								}
+							</div>
+						</div>
+						<!--compare-->
+						@if (nopAdvanceProductQuickViewSettings.ShowCompareProductButton)
+						{
+							<div class="overview-buttons variant-btn">
+								@await Html.PartialAsync("_CompareProductsButton", Model)
+							</div>
+						}
+						<div class="product-collateral group-product-tag">
+							@if (nopAdvanceProductQuickViewSettings.ShowProductTags)
+							{
+								@await Html.PartialAsync("~/Views/Product/_ProductTags.cshtml", Model.ProductTags)
+							}
+						</div>
+					</div>
+
+				</div>
+				<div class="product-collateral">
+					<!--associated products-->
+					<div class="product-variant-list">
+						@foreach (var variant in Model.AssociatedProducts)
+						{
+							<div class="product-variant-line" data-productid="@variant.Id">
+								@if (!string.IsNullOrWhiteSpace(variant.DefaultPictureModel.ImageUrl))
+								{
+									<div class="variant-picture">
+										<img alt="@variant.DefaultPictureModel.AlternateText" src="@variant.DefaultPictureModel.ImageUrl"
+									 title="@variant.DefaultPictureModel.Title" id="main-product-img-@variant.Id" />
+									</div>
+								}
+								<div class="variant-overview">
+									@if (!string.IsNullOrWhiteSpace(variant.Name))
+									{
+										<div class="variant-name">
+											@variant.Name
+										</div>
+									}
+									<!--availability-->
+                                    @await Html.PartialAsync("~/Views/Product/_Availability.cshtml", variant)
+									<!--sample download-->
+									@await Html.PartialAsync("~/Views/Product/_DownloadSample.cshtml", variant)
+									<!--attributes-->
+									@{
+										var dataDictAttributes = new ViewDataDictionary(ViewData);
+										dataDictAttributes.TemplateInfo.HtmlFieldPrefix = $"attributes_{variant.Id}";
+										@await Html.PartialAsync("~/Views/Product/_ProductAttributes.cshtml", variant, dataDictAttributes)
+									}
+									<!--gift card-->
+									@{
+										var dataDictGiftCard = new ViewDataDictionary(ViewData);
+										dataDictGiftCard.TemplateInfo.HtmlFieldPrefix = $"giftcard_{variant.Id}";
+										@await Html.PartialAsync("~/Views/Product/_GiftCardInfo.cshtml", variant.GiftCard, dataDictGiftCard)
+									}
+									<!--rental info-->
+									@{
+										var dataDictRental = new ViewDataDictionary(ViewData);
+										dataDictRental.TemplateInfo.HtmlFieldPrefix = $"rental_{variant.Id}";
+										@await Html.PartialAsync("~/Views/Product/_RentalInfo.cshtml", variant, dataDictRental)
+									}
+									<!--price & add to cart-->
+									@{
+										var dataDictPrice = new ViewDataDictionary(ViewData);
+										dataDictPrice.TemplateInfo.HtmlFieldPrefix = $"price_{variant.Id}";
+										@await Html.PartialAsync("~/Views/Product/_ProductPrice.cshtml", variant.ProductPrice, dataDictPrice)
+									}
+									<!--price breaks-->
+									@await Html.PartialAsync("~/Views/Product/_ProductTierPrices.cshtml", variant.TierPrices)
+									@{
+										var dataDictAddToCart = new ViewDataDictionary(ViewData);
+										dataDictAddToCart.TemplateInfo.HtmlFieldPrefix = $"addtocart_{variant.Id}";
+										@await Html.PartialAsync("~/Views/Product/_AddToCart.cshtml", variant.AddToCart, dataDictAddToCart)
+									}
+
+									<!--wishlist-->
+									@{
+										variant.AddToCart.DisableWishlistButton = variant.AddToCart.DisableWishlistButton == false ? !nopAdvanceProductQuickViewSettings.ShowAddToWishListButton : true;
+										
+										if (!variant.AddToCart.DisableWishlistButton)
+										{
+											var dataDictAddToWishlist = new ViewDataDictionary(ViewData);
+											dataDictAddToWishlist.TemplateInfo.HtmlFieldPrefix = $"addtocart_{variant.Id}";
+											
+											@await Html.PartialAsync("~/Views/Product/_AddToWishlist.cshtml", variant.AddToCart, dataDictAddToWishlist)
+										}
+									}
+								</div>
+							</div>
+						}
+						@if (Model.AssociatedProducts.Count == 0)
+						{
+							<div class="no-associated-products">
+								@T("Products.NoAssociatedProducts")
+							</div>
+						}
+					</div>
+
+				</div>
+
+				@if (nopAdvanceProductQuickViewSettings.ShowRelatedProducts)
+				{
+					@await Component.InvokeAsync("RelatedProducts", new { productId = Model.Id })
+				}
+				@if (nopAdvanceProductQuickViewSettings.ShowCrossSalesProducts)
+				{
+					var crossSellProducts = await iQuickViewWidgetModelFactory.GetCrossSellProductsByAsync(Model.Id);
+					if (crossSellProducts != null && crossSellProducts.Any())
+					{
+						@await Html.PartialAsync("CrossSellProducts.cshtml", crossSellProducts)
+					}
+				}
+			</div>
+		</form>
+	</div>
+</div>
+<script>
+	$(document).ready(function() {
+		$("#detail-tab").click(function(e) {
+			$(".detail-section").slideToggle();
+			$(".specifications-section").hide();
+			$(".description-section").hide();
+			$(this).find(".plus-icon").toggleClass('active');
+			$("#specifications-tab").find(".plus-icon").addClass('active');
+			$("#description-tab").find(".plus-icon").addClass('active');
+
+		});
+		$("#description-tab").click(function(e) {
+			$(".description-section").slideToggle();
+			$(".detail-section").hide();
+			$(".specifications-section").hide();
+			$(this).find(".plus-icon").toggleClass('active');
+			$("#specifications-tab").find(".plus-icon").addClass('active');
+			$("#detail-tab").find(".plus-icon").addClass('active');
+
+		});
+		$("#specifications-tab").click(function(e) {
+			$(".specifications-section").slideToggle();
+			$(".detail-section").hide();
+			$(".description-section").hide();
+			$(this).find(".plus-icon").toggleClass('active');
+			$("#detail-tab").find(".plus-icon").addClass('active');
+			$("#description-tab").find(".plus-icon").addClass('active');
+
+		});
+	});
+</script>
